@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog Details</title>
+  <meta name="description" content="Dynamic blog details page" id="meta-description" />
+
+  <!-- Tailwind CSS (CDN build, no Nuxt / no build step) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: "#eff9f4",
+              100: "#d7f0e3",
+              500: "#16a34a",
+              600: "#15803d",
+              700: "#166534",
+            },
+          },
+          fontFamily: {
+            sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body class="bg-white font-sans text-gray-800 antialiased">
+
+  <!-- App root: everything below is rendered dynamically by js/main.js based on
+       the `definition.slug` value returned from the API. No hardcoded blog
+       content lives in this file. -->
+  <main id="app" class="min-h-screen">
+
+    <!-- Loading state -->
+    <div id="loading-state" class="flex flex-col items-center justify-center gap-4 py-32 px-4">
+      <div class="h-12 w-12 rounded-full border-4 border-brand-100 border-t-brand-600 animate-spin"></div>
+      <p class="text-sm font-medium text-gray-500">Loading article…</p>
+    </div>
+
+    <!-- Error state (hidden by default) -->
+    <div id="error-state" class="hidden flex-col items-center justify-center gap-4 py-32 px-4 text-center">
+      <div class="h-14 w-14 rounded-full bg-red-50 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-red-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+        </svg>
+      </div>
+      <h2 class="text-lg font-semibold text-gray-900">We couldn't load this article</h2>
+      <p id="error-message" class="text-sm text-gray-500 max-w-md">Something went wrong while fetching the page data.</p>
+      <button id="retry-btn" class="mt-2 inline-flex items-center rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white hover:bg-brand-700 transition-colors">
+        Try again
+      </button>
+    </div>
+
+    <!-- Dynamic component sections get injected here, in `position` order -->
+    <div id="page-sections" class="hidden"></div>
+
+  </main>
+
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
